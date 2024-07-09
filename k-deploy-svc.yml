@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simple-file-app-deployment
+  labels:
+    app: node-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: node-deployment
+  template:
+    metadata:
+      labels:
+        app: node-deployment
+    spec:
+      containers:
+      - name: node-file-container
+        image: ttl.sh/simple-file-node-app:2h
+        volumeMounts:
+        - name: data-dir-volume
+          mountPath: /data
+      volumes:
+      - name: data-dir-volume
+        hostPath:
+          path: /data
+          type: DirectoryOrCreate
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  selector:
+    app: node-deployment
+  type: ClusterIP
+  ports:
+    - port: 80
