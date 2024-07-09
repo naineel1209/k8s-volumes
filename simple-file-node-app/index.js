@@ -1,13 +1,14 @@
 const fs = require('fs');
 const path = require('path');
 
-const filePath = path.join('/data', 'testfile.txt'); // Specify the directory and file name
+const directoryPath = '/data';
+const filePath = path.join(directoryPath, 'testfile.txt');
 
-console.log(filePath);
-
-const directoryPath = '/data'; // Specify the directory to read
-
-console.log(directoryPath);
+// Ensure the directory exists
+if (!fs.existsSync(directoryPath)) {
+    console.error(`Directory ${directoryPath} does not exist.`);
+    process.exit(1);
+}
 
 fs.readdir(directoryPath, (err, files) => {
     if (err) {

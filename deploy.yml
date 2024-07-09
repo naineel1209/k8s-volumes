@@ -20,21 +20,14 @@ spec:
         volumeMounts:
         - name: data-dir-volume
           mountPath: /data
+        - name: data-file-volume
+          mountPath: /data/testfile.txt
       volumes:
       - name: data-dir-volume
         hostPath:
           path: /data
-          type: DirectoryOrCreate
-
----
-
-apiVersion: v1
-kind: Service
-metadata:
-  name: nginx-service
-spec:
-  selector:
-    app: node-deployment
-  type: ClusterIP
-  ports:
-    - port: 80
+          type: Directory
+      - name: data-file-volume
+        hostPath:
+            path: /data/testfile.txt
+            type: File

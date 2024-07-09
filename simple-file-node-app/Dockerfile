@@ -11,5 +11,5 @@ RUN npm install
 # COPY all the other files
 COPY . ./
 
-# RUN the application
+# RUN the application with the debug script
 CMD ["npm", "start"]
